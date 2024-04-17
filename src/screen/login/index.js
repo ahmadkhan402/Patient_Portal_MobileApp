@@ -11,10 +11,10 @@ export default function Login() {
     <Text style={styles.title}>Welcome To Patient Portal</Text>
 
     <View style={styles.inputContainer}>
-      <Text style={styles.label}>Username</Text>
+      <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter your username"
+        placeholder="Enter your email"
         autoCapitalize="none"
       />
     </View>
@@ -32,7 +32,7 @@ export default function Login() {
       <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.loginButton}>
+    <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate(ScreenNames.HOME)}>
       <Text style={styles.loginButtonText}>Login</Text>
     </TouchableOpacity>
 

@@ -4,10 +4,13 @@ import {
   NavigationContainer,
   createNavigationContainerRef,
 } from "@react-navigation/native";
+import Login from "../src/screen/login"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ScreenNames from "./routes";
-import Login from "../src/screen/Login";
 import Register from "../src/screen/signup";
+import Home from "../src/screen/home";
+import Medicine from "../src/screen/medicine";
+
 
 
 
@@ -24,6 +27,8 @@ export default function Routes() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={ScreenNames.LOGIN} component={Login} />
         <Stack.Screen name={ScreenNames.SIGNUP} component={Register} />
+        <Stack.Screen name={ScreenNames.HOME} component={Home} />
+        <Stack.Screen name={ScreenNames.MEDICINE} component={Medicine} />
       </Stack.Navigator>
     </NavigationContainer>
   );
