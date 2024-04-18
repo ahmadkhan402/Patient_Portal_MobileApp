@@ -3,7 +3,7 @@ import { Modal, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'reac
 import styles from './styles';
 import { colors } from '../../src/utils/database';
 
-export default function CustomAddModal ({ visible, onClose, onAdd }) {
+export default function CustomAddModal ({ visible, onClose, onAdd , title ,item1,item2,item3,item4,item5}) {
   const [medicineName, setMedicineName] = useState('');
   const [duration, setDuration] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -47,40 +47,51 @@ export default function CustomAddModal ({ visible, onClose, onAdd }) {
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-        <Text style={styles.title}>Add Medicine</Text>
-        <Text style={styles.label}>Medicine Name</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.label}>{item1}</Text>
         <TextInput
-         placeholder='Please add Medicine Name'
+         placeholder={`Please add ${item1}`}
           style={styles.input}
           value={medicineName}
           onChangeText={setMedicineName}
         />
-        <Text style={styles.label}>Duration</Text>
+        <Text style={styles.label}>{item2}</Text>
         <TextInput
-         placeholder='Please add Duration'
+         placeholder={`Please add ${item2}`}
           style={styles.input}
           value={duration}
           onChangeText={setDuration}
         />
        
         
-            <Text style={styles.label}>Quantity</Text>
+            <Text style={styles.label}>{item3}</Text>
             <TextInput
-             placeholder='Please add Quantity'
+             placeholder={`Please add ${item3}`}
               style={styles.input}
               value={quantity}
               onChangeText={setQuantity}
             />
        
        
-            <Text style={styles.label}>Time</Text>
+            <Text style={styles.label}>{item4}</Text>
             <TextInput
-            placeholder='Please add Time'
+            placeholder={`Please add ${item4}`}
               style={styles.input}
               value={time}
               onChangeText={setTime}
             />
-       
+            {item5  && (
+              
+          <>
+            <Text style={styles.label}>{item5}</Text>
+            <TextInput
+            placeholder={`Please add ${item5}`}
+              style={styles.input}
+              value={time}
+              onChangeText={setTime}
+            />
+            </>
+         )}
    
         <View style={styles.buttonRow}>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>

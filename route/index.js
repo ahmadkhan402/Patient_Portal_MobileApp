@@ -10,6 +10,9 @@ import ScreenNames from "./routes";
 import Register from "../src/screen/signup";
 import Home from "../src/screen/home";
 import Medicine from "../src/screen/medicine";
+import MedicalHistory from "../src/screen/medicalHistory";
+import MyDoctor from "../src/screen/myDoctor";
+import MyApointments from "../src/screen/appointments";
 
 
 
@@ -29,6 +32,9 @@ export default function Routes() {
         <Stack.Screen name={ScreenNames.SIGNUP} component={Register} />
         <Stack.Screen name={ScreenNames.HOME} component={Home} />
         <Stack.Screen name={ScreenNames.MEDICINE} component={Medicine} />
+        <Stack.Screen name={ScreenNames.MEDICALHISTORY} component={MedicalHistory} />
+        <Stack.Screen name={ScreenNames.MYDOCTOR} component={MyDoctor} />
+        <Stack.Screen name={ScreenNames.MYAPOINTMENTS} component={MyApointments} />
       </Stack.Navigator>
     </NavigationContainer>
   );

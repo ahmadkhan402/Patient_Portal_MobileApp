@@ -31,7 +31,7 @@ const userName = "Ahmad";
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.box, activeBox === 'My Doctor' && styles.blueBox]}
-          onPress={() => handleBoxPress('My Doctor')}
+          onPress={() =>{ handleBoxPress('My Doctor'),navigation.navigate(ScreenNames.MYDOCTOR)}}
         >
           <Text style={[styles.boxText, activeBox === 'My Doctor' && styles.blueText]}>My Doctor</Text>
         </TouchableOpacity>
@@ -39,13 +39,13 @@ const userName = "Ahmad";
       <View style={styles.boxContainer}>
         <TouchableOpacity
           style={[styles.box, activeBox === 'Medical History' && styles.blueBox]}
-          onPress={() => handleBoxPress('Medical History')}
+          onPress={() =>{ handleBoxPress('Medical History'),navigation.navigate(ScreenNames.MEDICALHISTORY)}}
         >
           <Text style={[styles.boxText, activeBox === 'Medical History' && styles.blueText]}>Medical History</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.box, activeBox === 'Appointments' && styles.blueBox]}
-          onPress={() => handleBoxPress('Appointments')}
+          onPress={() =>{ handleBoxPress('Appointments'),navigation.navigate(ScreenNames.MYAPOINTMENTS)}}
         >
           <Text style={[styles.boxText, activeBox === 'Appointments' && styles.blueText]}>Appointments</Text>
         </TouchableOpacity>

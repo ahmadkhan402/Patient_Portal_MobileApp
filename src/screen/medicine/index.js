@@ -78,10 +78,15 @@ export default function Medicine() {
       </View>
 
       <CustomAddModal
-        visible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        onAdd={handleAddMedicine}
-      />
+                visible={isModalVisible}
+                onClose={() => setIsModalVisible(false)}
+                title={'Add Medicine'}
+                item1={'Medicine Name'}
+                item2={'Duration'}
+                item3={'Quantity'}
+                item4={'Time'}
+                onAdd={handleAddMedicine}
+            />
     </View>
   )
 

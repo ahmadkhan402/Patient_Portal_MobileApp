@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Patient_Portal_MobileApp",
+    "name": "Patient Portal",
     "slug": "Patient_Portal_MobileApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,12 +19,38 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.ahmadktkdev.Patient_Portal"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "629b1cb8-5953-460b-b189-49bfa69fe2eb"
+      }
     }
+  },
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true
+    },
+    "preview4": {
+      "distribution": "internal"
+    },
+    "production": {}
   }
 }
