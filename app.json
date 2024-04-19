@@ -33,31 +33,8 @@
         "projectId": "629b1cb8-5953-460b-b189-49bfa69fe2eb"
       }
     }
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "android": {
-        "buildType": "apk",
-        "distribution": "internal"
-      }
-    },
-    "preview2": {
-      "android": {
-        "gradleCommand": ":app:assembleRelease"
-      }
-    },
-    "preview3": {
-      "developmentClient": true
-    },
-    "preview4": {
-      "distribution": "internal"
-    },
-    "production": {}
   }
+  
 }
 
 
