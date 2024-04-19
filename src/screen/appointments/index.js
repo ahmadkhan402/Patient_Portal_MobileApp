@@ -96,7 +96,7 @@ export default function MyApointments() {
                         <Text style={styles.buttonText}>Add</Text>
                     </TouchableOpacity>
                 </View>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false} key={Math.random()}>
                     <View style={styles.divider}>
                         <Text style={styles.itemtitle}>Current Appointments</Text>
                         <View style={[styles.listHeader]}>
