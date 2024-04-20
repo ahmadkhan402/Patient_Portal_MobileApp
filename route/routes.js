@@ -6,6 +6,8 @@ const ScreenNames = {
     MEDICALHISTORY:"MedicalHistory",
     MYDOCTOR:"MyDoctor",
     MYAPOINTMENTS:"MyApointments",
+    DRAWER:"Drawer",
+    ROUTE:"Route",
   };
   
   export default ScreenNames;

@@ -26,8 +26,9 @@ export default function Routes() {
 
 
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      // <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator  screenOptions={{ headerShown: false }}>
+      {/* <Stack.Screen name={ScreenNames.DRAWER} component={DrawerNavigator} /> */}
         <Stack.Screen name={ScreenNames.LOGIN} component={Login} />
         <Stack.Screen name={ScreenNames.SIGNUP} component={Register} />
         <Stack.Screen name={ScreenNames.HOME} component={Home} />
@@ -36,6 +37,6 @@ export default function Routes() {
         <Stack.Screen name={ScreenNames.MYDOCTOR} component={MyDoctor} />
         <Stack.Screen name={ScreenNames.MYAPOINTMENTS} component={MyApointments} />
       </Stack.Navigator>
-    </NavigationContainer>
+  //  </NavigationContainer>
   );
 }
