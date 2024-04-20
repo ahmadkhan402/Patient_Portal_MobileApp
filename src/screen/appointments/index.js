@@ -1,68 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import CustomHeader from '../../../components/header';
 import styles from './styles';
 import { colors } from '../../utils/database';
 import CustomAddModal from '../../../components/customAddModal';
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
 
 export default function MyApointments() {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [data1, setData] = useState([]);
+    const [data, setData] = useState([]);
+    const [data1, setData1] = useState([]);
     console.log("data", data);
 
 
-    const data = [
-        {
-            doctorName: 'Dr. Imran Doger',
-            purpose: 'Diabetes',
-            clinic: 'Din Medical Complex',
-            time: '03:00 PM'
-        },
-        {
-            doctorName: 'Dr. Sarah Khan',
-            purpose: 'General Checkup',
-            clinic: 'City Medical Center',
-            time: '10:30 AM'
-        },
-        {
-            doctorName: 'Dr. John Smith',
-            purpose: 'Cardiology Consultation',
-            clinic: 'HeartCare Hospital',
-            time: '02:00 PM'
-        },
-        {
-            doctorName: 'Dr. Emily Wong',
-            purpose: 'Dental Cleaning',
-            clinic: 'Smile Dental Clinic',
-            time: '11:15 AM'
-        },
-        {
-            doctorName: 'Dr. Imran Doger',
-            purpose: 'Diabetes',
-            clinic: 'Din Medical Complex',
-            time: '03:00 PM'
-        },
-        {
-            doctorName: 'Dr. Sarah Khan',
-            purpose: 'General Checkup',
-            clinic: 'City Medical Center',
-            time: '10:30 AM'
-        },
-        {
-            doctorName: 'Dr. John Smith',
-            purpose: 'Cardiology Consultation',
-            clinic: 'HeartCare Hospital',
-            time: '02:00 PM'
-        },
-        {
-            doctorName: 'Dr. Emily Wong',
-            purpose: 'Dental Cleaning',
-            clinic: 'Smile Dental Clinic',
-            time: '11:15 AM'
-        }
-    ];
+    // const data = [
+    //     {
+    //         doctorName: 'Dr. Imran Doger',
+    //         purpose: 'Diabetes',
+    //         clinic: 'Din Medical Complex',
+    //         time: '03:00 PM'
+    //     },
+    //     {
+    //         doctorName: 'Dr. Sarah Khan',
+    //         purpose: 'General Checkup',
+    //         clinic: 'City Medical Center',
+    //         time: '10:30 AM'
+    //     },
+    //     {
+    //         doctorName: 'Dr. John Smith',
+    //         purpose: 'Cardiology Consultation',
+    //         clinic: 'HeartCare Hospital',
+    //         time: '02:00 PM'
+    //     },
+    //     {
+    //         doctorName: 'Dr. Emily Wong',
+    //         purpose: 'Dental Cleaning',
+    //         clinic: 'Smile Dental Clinic',
+    //         time: '11:15 AM'
+    //     },
+    //     {
+    //         doctorName: 'Dr. Imran Doger',
+    //         purpose: 'Diabetes',
+    //         clinic: 'Din Medical Complex',
+    //         time: '03:00 PM'
+    //     },
+    //     {
+    //         doctorName: 'Dr. Sarah Khan',
+    //         purpose: 'General Checkup',
+    //         clinic: 'City Medical Center',
+    //         time: '10:30 AM'
+    //     },
+    //     {
+    //         doctorName: 'Dr. John Smith',
+    //         purpose: 'Cardiology Consultation',
+    //         clinic: 'HeartCare Hospital',
+    //         time: '02:00 PM'
+    //     },
+    //     {
+    //         doctorName: 'Dr. Emily Wong',
+    //         purpose: 'Dental Cleaning',
+    //         clinic: 'Smile Dental Clinic',
+    //         time: '11:15 AM'
+    //     }
+    // ];
     // const data1 = [
     //     {
     //         doctorName: 'Dr. Imran Doger',
@@ -123,9 +124,72 @@ export default function MyApointments() {
       
       }
 
-      const handleAppointentDone = async (item) => {
-          console.log("item",item);
+      const handleLongPress = (appointmentId) => {
+        Alert.alert(
+            'Appointment Done',
+            'Are you sure you want to delete this appointment?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel'
+                },
+                {
+                    text:  'Done',
+                    style: 'destructive',
+                    onPress: () => deleteAppointment(appointmentId)
+                }
+            ],
+            { cancelable: true }
+        );
+    };
+
+    const deleteAppointment = async (appointmentId) => {
+        try {
+            const appointmentRef = doc(db, `PatientPortal/${auth.currentUser.uid}`, `Appointments/${auth.currentUser.uid}`, 'CurrentAppointments', appointmentId._id);
+            await deleteDoc(appointmentRef);
+            // After deletion, refresh data from Firestore
+            getDataFromFirestore();
+
+            handleAddMRecentAppointment(appointmentId);
+        } catch (error) {
+            console.error('Error deleting appointment:', error);
+        }
+    };
+    const handleAddMRecentAppointment = async (newMedicine) => {
+       console.log("new madicne", newMedicine);
+        try {
+          const userRef = doc(collection(db, `PatientPortal/${auth.currentUser.uid}`, `Appointments/${auth.currentUser.uid}`,"RecentAppointments"));
+          await setDoc(userRef, {
+            doctorName: newMedicine.doctorName,
+            purpose: newMedicine.purpose,
+            clinic: newMedicine.clinic,
+            time: newMedicine.time,
+            _id: userRef.id
+          });
+          getDataOfRecentFromFirestore()
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      
+      };
+     
+      
+     
+    const getDataOfRecentFromFirestore = async () => {
+        try {
+          let array = []
+          const querySnapshot = await getDocs(collection(db, `PatientPortal/${auth.currentUser.uid}`, `Appointments/${auth.currentUser.uid}`,"RecentAppointments"));
+          querySnapshot.forEach((doc) => {
+            array.push(doc.data())
+           
+          });
+          setData1(array);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      
       }
+
     return (
         <View style={styles.container}>
             <CustomHeader />
@@ -148,8 +212,8 @@ export default function MyApointments() {
                             <Text style={styles.cellHeader}>Time</Text>
                         </View>
 
-                        {data1.map((item, index) => (
-                            <TouchableOpacity onLongPress={handleAppointentDone(item._id)} style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
+                        {data.map((item, index) => (
+                            <TouchableOpacity onLongPress={ () =>handleLongPress(item)} style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
                                 <Text style={styles.cell}>{item.doctorName}</Text>
                                 <Text style={styles.cell}>{item.purpose}</Text>
                                 <Text style={styles.cell}>{item.clinic}</Text>
@@ -167,7 +231,7 @@ export default function MyApointments() {
                             <Text style={styles.cellHeader}>Clinic</Text>
                             <Text style={styles.cellHeader}>Time</Text>
                         </View>
-                        {data.map((item, index) => (
+                        {data1.map((item, index) => (
                             <View style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
                                 <Text style={styles.cell}>{item.doctorName}</Text>
                                 <Text style={styles.cell}>{item.purpose}</Text>
