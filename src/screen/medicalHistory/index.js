@@ -54,8 +54,9 @@ export default function MedicalHistory() {
           await setDoc(userRef, {
             diseaseName: newMedicine.itemN1,
             symptoms: newMedicine.itemN2,
-            hospitalName: newMedicine.itemN3,
-            checkupDateTime: newMedicine.itemN4,
+            DoctorName:newMedicine.itemN3,
+            hospitalName: newMedicine.itemN4,
+            checkupDateTime: newMedicine.itemN5,
           });
         } catch (e) {
           console.error("Error adding document: ", e);
@@ -90,8 +91,11 @@ export default function MedicalHistory() {
             
         <View style={styles.itemContent}>
             <Text style={styles.diseaseName}>{item.diseaseName}</Text>
+
             <Text style={styles.subtitle}>Symptoms:</Text>
             <Text>{item.symptoms}</Text>
+            <Text style={styles.subtitle}>Doctor Name:</Text>
+            <Text>{item.DoctorName}</Text>
             <Text style={styles.subtitle}>Hospital Name:</Text>
             <Text>{item.hospitalName}</Text>
             <Text style={styles.subtitle}>Checkup Date/Time:</Text>
@@ -106,7 +110,7 @@ export default function MedicalHistory() {
             <CustomHeader />
             <View style={styles.itemcontainer}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>Welcome to Medicine</Text>
+                    <Text style={styles.title}>Welcome to Medical history</Text>
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={() => setIsModalVisible(true)}>
