@@ -38,9 +38,15 @@ const Stack = createStackNavigator();
 function CustomDrawerContent(props) {
   const [userName, setUserName] = useState("");
 
+  const isfocus = useIsFocused()
+  const status = useDrawerStatus()
+  // useFocusEffect(() => {
+  //   getDataFromFirestore()
+  // })
   useEffect(() => {
-    getDataFromFirestore()
-}, [])
+    if(auth?.currentUser?.uid) getDataFromFirestore()
+
+}, [status])
 
 const getDataFromFirestore = async () => {
   const docRef = doc(db, "users", auth?.currentUser?.uid);

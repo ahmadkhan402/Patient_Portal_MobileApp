@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import ScreenNames from '../../../route/routes';
@@ -17,9 +17,15 @@ export default function Register() {
     const [Error, setError] = useState("");
     const [id, setId] = useState("");
   
+
     const handleSignUp = () => {
-      console.log("User", email, password ,confirmPassword);
-      createUserWithEmailAndPassword(auth, email, password ,confirmPassword)
+      if(password !== confirmPassword){
+        Alert.alert("Password not matched");
+        return
+      }
+     try {
+    
+      createUserWithEmailAndPassword(auth, email, password )
         .then((userCredential) => {
           // Signed up
   
@@ -55,8 +61,12 @@ export default function Register() {
           }
           setError(customErrorMessage);
         });
+          
+     } catch (error) {
+      console.log("error", error);
+     }
     };
-    const AddUserData = async (Username, email) => {
+    const AddUserData = async () => {
       try {
         const userRef = doc(db, "users", auth.currentUser.uid);
         await setDoc(userRef, {
