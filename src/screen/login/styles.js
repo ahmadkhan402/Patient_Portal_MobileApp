@@ -64,7 +64,12 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
-  }
+  },
+  error:{
+    alignSelf: 'flex-end',
+    flexDirection:"row",
+    marginTop:7
+  },
 });
 
 export default styles;

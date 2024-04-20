@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   label: {
     marginBottom: 10,
@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     marginTop: 10,
    
+  },
+  error:{
+    alignSelf: 'flex-end',
+    flexDirection:"row",
+    paddingHorizontal:5
   },
   forgotPasswordText: {
     color: 'black',

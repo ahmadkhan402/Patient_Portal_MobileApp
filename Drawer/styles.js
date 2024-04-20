@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
       },
       drawerHeader: {
         paddingVertical: 20,
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         // borderBottomWidth: 1,
         borderBottomColor: '#ddd',
       },

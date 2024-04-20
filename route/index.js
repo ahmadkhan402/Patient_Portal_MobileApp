@@ -13,9 +13,7 @@ import Medicine from "../src/screen/medicine";
 import MedicalHistory from "../src/screen/medicalHistory";
 import MyDoctor from "../src/screen/myDoctor";
 import MyApointments from "../src/screen/appointments";
-
-
-
+import { auth, db } from "../firebase";
 
 const Stack = createNativeStackNavigator();
 const navigationRef = createNavigationContainerRef();
@@ -23,12 +21,9 @@ const navigationRef = createNavigationContainerRef();
 
 
 export default function Routes() {
-
-
   return (
       // <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator  screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name={ScreenNames.DRAWER} component={DrawerNavigator} /> */}
+      <Stack.Navigator initialRouteName={auth.currentUser ? ScreenNames.HOME : ScreenNames.LOGIN} screenOptions={{ headerShown: false }}>
         <Stack.Screen name={ScreenNames.LOGIN} component={Login} />
         <Stack.Screen name={ScreenNames.SIGNUP} component={Register} />
         <Stack.Screen name={ScreenNames.HOME} component={Home} />

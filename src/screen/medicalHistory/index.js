@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import CustomHeader from '../../../components/header';
 import styles from './styles';
 import { colors } from '../../utils/database';
 import CustomAddModal from '../../../components/customAddModal';
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../../firebase';
 
 export default function MedicalHistory() {
     const [isModalVisible, setIsModalVisible] = useState(false);
-
+    const [data, setData] = useState([]);
+    console.log("data", data);
 
     const diseaseData = [
         {
@@ -40,10 +43,44 @@ export default function MedicalHistory() {
         },
       ];
       
-      const handleAddMedicine = (newMedicine) => {
+    
+      const handleAddMedicine = async (newMedicine) => {
+        console.log('====================================');
         console.log('Adding new medicine:', newMedicine);
-        // Perform actions to add the new medicine (e.g., update state, send API request, etc.)
+        console.log('====================================');
+        try {
+          const userRef = doc(collection(db, `PatientPortal/${auth.currentUser.uid}`, "MedicalHistory"));
+          console.log( "============================",userRef.id);
+          await setDoc(userRef, {
+            diseaseName: newMedicine.itemN1,
+            symptoms: newMedicine.itemN2,
+            hospitalName: newMedicine.itemN3,
+            checkupDateTime: newMedicine.itemN4,
+          });
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      
       };
+      
+      useEffect(() => {
+        getDataFromFirestore()
+      }, [isModalVisible])
+      
+      const getDataFromFirestore = async () => {
+        try {
+          let array = []
+          const querySnapshot = await getDocs(collection(db, `PatientPortal/${auth.currentUser.uid}`, "MedicalHistory"));
+          querySnapshot.forEach((doc) => {
+            array.push(doc.data())
+           
+          });
+          setData(array);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      
+      }
     const renderDiseaseItem = ({ item,index }) => (
         <View style={styles.itemContainer}>
         <View style={{flexDirection:"row"}}>
@@ -77,9 +114,9 @@ export default function MedicalHistory() {
                     </TouchableOpacity>
                 </View>
                 <FlatList
-                    data={diseaseData}
+                    data={data}
                     renderItem={renderDiseaseItem}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item,index) => index.toString()}
                     contentContainerStyle={styles.listContainer}
                     showsVerticalScrollIndicator={false}
                 />

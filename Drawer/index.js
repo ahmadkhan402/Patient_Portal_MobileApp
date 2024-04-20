@@ -16,91 +16,74 @@ import MyDoctor from '../src/screen/myDoctor';
 import MyApointments from '../src/screen/appointments';
 import Routes from '../route';
 import styles from './styles';
-// import Routes from '..';
-// import { getAuth, signOut } from "firebase/auth";
-// import { auth, db } from '../../firebase';
-// import { removeItem } from '../../AsyncStorage/AsyscStorage';
-// import ProfileScreen from './ProfileScreen';
-// import EditProfile from './EditProfile';
-// import { doc, getDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
+import { auth, db } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 
 
-function Screen() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Tabs"
-        component={Routes}
-        options={{ headerShown: false }} />
-    </Stack.Navigator>
-  )
-}
+// function Screen() {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen
+//         name="Tabs"
+//         component={Routes}
+//         options={{ headerShown: false }} />
+//     </Stack.Navigator>
+//   )
+// }
 
 function CustomDrawerContent(props) {
-  const [email, setEmail] = useState("")
-  const [data, setData] = useState("")
-  const [Null, setNull] = useState(false)
+  const [userName, setUserName] = useState("");
 
-  const isDrawerOpen = useDrawerStatus()
-  const isfocus = useIsFocused()
+  useEffect(() => {
+    getDataFromFirestore()
+}, [])
 
+const getDataFromFirestore = async () => {
+  const docRef = doc(db, "users", auth?.currentUser?.uid);
+  try{
+  const docSnap = await getDoc(docRef);
 
-  // useEffect(()=>{
-  //   async function getMostRecentData(){
-  //     const UserRef = doc(db, "users", auth.currentUser.uid)
-  //     const docSnap = await getDoc(UserRef);
-
-  //     if (docSnap.exists()) {
-  //       console.log("Document data:", docSnap.data());
-  //       setData(docSnap.data())
-  //     } else {
-  //       setData({Display_Name: "Your Name", ImageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0K8CiKG5CuQyWV9L2YOepIHMnzTxwYNFXTw&usqp=CAU"})
-  //       // docSnap.data() will be undefined in this case
-  //       console.log("No such document!");
-  //     }
-
-  //   }
-  //  if(isDrawerOpen){
-  //       getMostRecentData();
-  //  }
-  //       setEmail(auth.currentUser?.email);
-
-  //     },[isDrawerOpen]) // Empty dependency array means this will run when the screen gains focus
-
+  if (docSnap.exists()) {
+    setUserName(docSnap.data()?.username)
+  } else {
+    console.log("No such document!");
+  }
+}catch(error){
+  console.log("error",error)
+}
+}
 
   const navigation = useNavigation()
-  //   const Handlelogout=()=>{
+    const Handlelogout=()=>{
+      signOut(auth).then(() => {
 
-  //     const auth = getAuth();
-  //     signOut(auth).then(() => {
-  //       // Sign-out successful.
-  //        removeItem('onLogin')
-  //       alert('Sign-out successful')
-  //       navigation.navigate('Login')
-  //     }).catch((error) => {
-  //       // An error happened.
-  //       alert('An error happened')
-  //     });
+        // alert('Sign-out successful')
+        navigation.navigate(ScreenNames.LOGIN)
+      }).catch((error) => {
+        // An error happened.
+        alert('An error happened')
+      });
 
-  //   }
+    }
 
 
   return (
-    <View  style={styles.drawerContainer}>
+    <View style={styles.drawerContainer}>
     <View style={styles.drawerTopIcon}>
     <Ionicons name="menu-outline" size={30} color="#fff" />
     </View>
       <View style={styles.drawerHeader}>
         {/* Display your name at the top */}
-        <Text style={styles.nameText}>Heider</Text>
+        <Text style={styles.nameText}>{userName.substring(0, 10)}</Text>
       </View>
 
       {/* Your existing content */}
       <View style={styles.content}>
-        <TouchableOpacity style={styles.logoutButton}>
+        <TouchableOpacity style={styles.logoutButton} onPress={Handlelogout}>
           <AntDesign name="logout" size={24} color="#fff"/>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>

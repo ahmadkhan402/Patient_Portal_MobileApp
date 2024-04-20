@@ -4,35 +4,37 @@ import styles from './styles';
 import { colors } from '../../src/utils/database';
 
 export default function CustomAddModal ({ visible, onClose, onAdd , title ,item1,item2,item3,item4,item5}) {
-  const [medicineName, setMedicineName] = useState('');
-  const [duration, setDuration] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [time, setTime] = useState('');
-
+  const [itemN1, setitem1] = useState('');
+  const [itemN2, setitem2] = useState('');
+  const [itemN3, setitem3] = useState('');
+  const [itemN4, setitem4] = useState('');
+  const [itemN5, setitem5] = useState('');
   const handleAddMedicine = () => {
     // Validate input fields before adding medicine
-    if (!medicineName || !duration || !quantity || !time) {
+    if (!itemN1 || !itemN2 || !itemN3 || !itemN4) {
       alert('Please fill out all fields.');
       return;
     }
 
     // Create a new medicine object with input values
     const newMedicine = {
-      name: medicineName,
-      duration,
-      quantity,
-      time,
+      itemN1,
+      itemN2,
+      itemN3,
+      itemN4,
+      itemN5
+
     };
 
     // Call the onAdd callback function with the new medicine object
     onAdd(newMedicine);
 
     // Clear input fields after adding medicine
-    setMedicineName('');
-    setDuration('');
-    setQuantity('');
-    setTime('');
-
+    setitem1('');
+    setitem2('');
+    setitem3('');
+    setitem4('');
+    setitem5('');
     // Close the modal after adding medicine
     onClose();
   };
@@ -52,15 +54,15 @@ export default function CustomAddModal ({ visible, onClose, onAdd , title ,item1
         <TextInput
          placeholder={`Please add ${item1}`}
           style={styles.input}
-          value={medicineName}
-          onChangeText={setMedicineName}
+          value={itemN1}
+          onChangeText={setitem1}
         />
         <Text style={styles.label}>{item2}</Text>
         <TextInput
          placeholder={`Please add ${item2}`}
           style={styles.input}
-          value={duration}
-          onChangeText={setDuration}
+          value={itemN2}
+          onChangeText={setitem2}
         />
        
         
@@ -68,8 +70,8 @@ export default function CustomAddModal ({ visible, onClose, onAdd , title ,item1
             <TextInput
              placeholder={`Please add ${item3}`}
               style={styles.input}
-              value={quantity}
-              onChangeText={setQuantity}
+              value={itemN3}
+              onChangeText={setitem3}
             />
        
        
@@ -77,8 +79,8 @@ export default function CustomAddModal ({ visible, onClose, onAdd , title ,item1
             <TextInput
             placeholder={`Please add ${item4}`}
               style={styles.input}
-              value={time}
-              onChangeText={setTime}
+              value={itemN4}
+              onChangeText={setitem4}
             />
             {item5  && (
               
@@ -87,8 +89,8 @@ export default function CustomAddModal ({ visible, onClose, onAdd , title ,item1
             <TextInput
             placeholder={`Please add ${item5}`}
               style={styles.input}
-              value={time}
-              onChangeText={setTime}
+              value={itemN5}
+              onChangeText={setitem5}
             />
             </>
          )}
