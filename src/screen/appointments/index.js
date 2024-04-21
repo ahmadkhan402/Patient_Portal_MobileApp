@@ -107,6 +107,7 @@ export default function MyApointments() {
       
       useEffect(() => {
         getDataFromFirestore()
+        getDataOfRecentFromFirestore()
       }, [isModalVisible])
       
       const getDataFromFirestore = async () => {
@@ -195,7 +196,7 @@ export default function MyApointments() {
             <CustomHeader />
             <View style={styles.itemcontainer}>
                 <View style={styles.content}>
-                    <Text style={styles.title}>Welcome to My Doctor</Text>
+                    <Text style={styles.title}>Welcome to My Appointments</Text>
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={() => setIsModalVisible(true)}>
@@ -213,7 +214,7 @@ export default function MyApointments() {
                         </View>
 
                         {data.map((item, index) => (
-                            <TouchableOpacity onLongPress={ () =>handleLongPress(item)} style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
+                            <TouchableOpacity key={index} onLongPress={ () =>handleLongPress(item)} style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
                                 <Text style={styles.cell}>{item.doctorName}</Text>
                                 <Text style={styles.cell}>{item.purpose}</Text>
                                 <Text style={styles.cell}>{item.clinic}</Text>
@@ -232,7 +233,7 @@ export default function MyApointments() {
                             <Text style={styles.cellHeader}>Time</Text>
                         </View>
                         {data1.map((item, index) => (
-                            <View style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
+                            <View key={index} style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
                                 <Text style={styles.cell}>{item.doctorName}</Text>
                                 <Text style={styles.cell}>{item.purpose}</Text>
                                 <Text style={styles.cell}>{item.clinic}</Text>

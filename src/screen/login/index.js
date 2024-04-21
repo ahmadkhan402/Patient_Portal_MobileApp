@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import ScreenNames from '../../../route/routes';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase';
 
 export default function Login() {
@@ -12,6 +12,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [Error, setError] = useState("");
+  const [send, setSend] = useState("");
+
+
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -53,14 +56,31 @@ export default function Login() {
           }, 1000);
       });
   };
-
-// useEffect(() => {
-//   setTimeout(() =>{
-//     setError("ececed");
-//   },[200]) 
-// },[Error])
    
- 
+const handleForgetPassword = () => {
+  if (email) {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setSend("Email has been send Successfully");
+        setTimeout(() => {
+          setSend("");
+        }, 1000);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(errorMessage);
+        setTimeout(() => {
+          setError("");
+        }, 1000);
+      });
+  } else {
+      setError("Please enter valid email");
+        setTimeout(() => {
+          setError("");
+        }, 1000);
+  }
+};
   return (
     <View style={styles.container}>
     <Text style={styles.title}>Welcome To Patient Portal</Text>
@@ -85,7 +105,7 @@ export default function Login() {
       />
     </View>
 
-    <TouchableOpacity style={styles.forgotPassword}>
+    <TouchableOpacity style={styles.forgotPassword} onPress={handleForgetPassword}>
       <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
     </TouchableOpacity>
 
@@ -108,6 +128,8 @@ export default function Login() {
         >
         {Error}
         </Text>
+        {send != "" && <Text style = {{alignItems:"flex-end",  textAlign: "right", fontSize: 13,color:"green"}}>{send}</Text>}
+  
         </View>
   </View>
   );

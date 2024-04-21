@@ -4,7 +4,7 @@
     "slug": "Patient_Portal",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/patientAppLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/patientAppLogo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.ahmadktkdev.Patient_Portal"
