@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Button, useWindowDimensions, StyleSheet, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Button, useWindowDimensions, StyleSheet, Image, Alert } from 'react-native';
 
 import { NavigationContainer, useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 
@@ -64,7 +64,27 @@ const getDataFromFirestore = async () => {
 }
 
   const navigation = useNavigation()
-    const Handlelogout=()=>{
+
+  const handleLogout = () => {
+    // Show confirmation alert before logging out
+    Alert.alert(
+      'Confirm Logout',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Logout',
+          onPress: () => {userLogout()}
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+    const userLogout=()=>{
       signOut(auth).then(() => {
 
         // alert('Sign-out successful')
@@ -89,7 +109,7 @@ const getDataFromFirestore = async () => {
 
       {/* Your existing content */}
       <View style={styles.content}>
-        <TouchableOpacity style={styles.logoutButton} onPress={Handlelogout}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <AntDesign name="logout" size={24} color="#fff"/>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>

@@ -190,7 +190,28 @@ export default function MyApointments() {
         }
       
       }
-
+      const [showMessage, setShowMessage] = useState(false);
+      useEffect(() => {
+        if (data.length === 0) {
+          const timer = setTimeout(() => {
+            setShowMessage(true);
+          }, 1500);
+          return () => clearTimeout(timer);
+        } else {
+          setShowMessage(false);
+        }
+      }, [data]);
+      
+      useEffect(() => {
+        if (data1.length === 0) {
+          const timer = setTimeout(() => {
+            setShowMessage(true);
+          }, 1500);
+          return () => clearTimeout(timer);
+        } else {
+          setShowMessage(false);
+        }
+      }, [data1]);
     return (
         <View style={styles.container}>
             <CustomHeader />
@@ -203,6 +224,7 @@ export default function MyApointments() {
                         <Text style={styles.buttonText}>Add</Text>
                     </TouchableOpacity>
                 </View>
+                
                 <ScrollView showsVerticalScrollIndicator={false} key={Math.random()}>
                     <View style={styles.divider}>
                         <Text style={styles.itemtitle}>Current Appointments</Text>
@@ -212,9 +234,11 @@ export default function MyApointments() {
                             <Text style={styles.cellHeader}>Clinic</Text>
                             <Text style={styles.cellHeader}>Time</Text>
                         </View>
-
+                        {data.length === 0 && showMessage && <Text>No Current Appointments Found</Text> } 
                         {data.map((item, index) => (
+                         
                             <TouchableOpacity key={index} onLongPress={ () =>handleLongPress(item)} style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
+                        
                                 <Text style={styles.cell}>{item.doctorName}</Text>
                                 <Text style={styles.cell}>{item.purpose}</Text>
                                 <Text style={styles.cell}>{item.clinic}</Text>
@@ -224,6 +248,7 @@ export default function MyApointments() {
                         }
 
                     </View>
+                    
                     <View style={styles.divider}>
                         <Text style={styles.itemtitle}>Recent Appointments</Text>
                         <View style={[styles.listHeader]}>
@@ -232,6 +257,7 @@ export default function MyApointments() {
                             <Text style={styles.cellHeader}>Clinic</Text>
                             <Text style={styles.cellHeader}>Time</Text>
                         </View>
+                        {data1.length === 0 && showMessage && <Text>No Recent Appointments Found</Text>} 
                         {data1.map((item, index) => (
                             <View key={index} style={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#f9f9f9' : colors.lightGrey, borderBottomEndRadius: 20 }]}>
                                 <Text style={styles.cell}>{item.doctorName}</Text>

@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
+    noListContainer:{
+        flex:1,
+justifyContent:"center",
+alignItems:"center"
+    },
     button: {
         backgroundColor: 'white', // Set button background color
         paddingHorizontal: 20,

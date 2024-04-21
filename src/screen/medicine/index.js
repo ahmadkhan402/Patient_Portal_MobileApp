@@ -72,6 +72,17 @@ export default function Medicine() {
     getDataFromFirestore()
   }, [isModalVisible])
 
+  const [showMessage, setShowMessage] = useState(false);
+  useEffect(() => {
+    if (data.length === 0) {
+      const timer = setTimeout(() => {
+        setShowMessage(true);
+      }, 1500);
+      return () => clearTimeout(timer);
+    } else {
+      setShowMessage(false);
+    }
+  }, [data]);
   const getDataFromFirestore = async () => {
     try {
       let array = []
@@ -104,7 +115,7 @@ export default function Medicine() {
           <Text style={styles.cellHeader}>Quantity</Text>
           <Text style={styles.cellHeader}>Duration</Text>
         </View>
-
+        {data.length === 0 && showMessage && <Text>No Medicine record Found</Text>} 
         <FlatList
           data={data}
           renderItem={renderItem}

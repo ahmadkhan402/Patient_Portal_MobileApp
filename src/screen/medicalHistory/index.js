@@ -82,6 +82,18 @@ export default function MedicalHistory() {
         }
       
       }
+
+      const [showMessage, setShowMessage] = useState(false);
+      useEffect(() => {
+        if (data.length === 0) {
+          const timer = setTimeout(() => {
+            setShowMessage(true);
+          }, 1500);
+          return () => clearTimeout(timer);
+        } else {
+          setShowMessage(false);
+        }
+      }, [data]);
     const renderDiseaseItem = ({ item,index }) => (
         <View style={styles.itemContainer}>
         <View style={{flexDirection:"row"}}>
@@ -90,6 +102,7 @@ export default function MedicalHistory() {
         </View>
             
         <View style={styles.itemContent}>
+    
             <Text style={styles.diseaseName}>{item.diseaseName}</Text>
 
             <Text style={styles.subtitle}>Symptoms:</Text>
@@ -116,6 +129,9 @@ export default function MedicalHistory() {
                     <TouchableOpacity style={styles.button} onPress={() => setIsModalVisible(true)}>
                         <Text style={styles.buttonText}>Add</Text>
                     </TouchableOpacity>
+                </View>
+                <View style={styles.noListContainer}>
+                {data.length === 0 &&  showMessage && <Text>No Medical History Found</Text>} 
                 </View>
                 <FlatList
                     data={data}

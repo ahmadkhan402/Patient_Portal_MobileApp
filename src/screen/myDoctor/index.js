@@ -75,6 +75,18 @@ const getDataFromFirestore = async () => {
   }
 
 }
+
+const [showMessage, setShowMessage] = useState(false);
+useEffect(() => {
+  if (data.length === 0) {
+    const timer = setTimeout(() => {
+      setShowMessage(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  } else {
+    setShowMessage(false);
+  }
+}, [data]);
   const renderItem = ({ item, index }) => {
     const backgroundColor = index % 2 === 0 ? '#f9f9f9' : colors.lightGrey; // Alternate row colors
 
@@ -104,9 +116,9 @@ const getDataFromFirestore = async () => {
             <Text style={styles.cellHeader}>Doctor Name</Text>
             <Text style={styles.cellHeader}>Specification</Text>
             <Text style={styles.cellHeader}>Clinic Name</Text>
-            <Text style={styles.cellHeader}>Time</Text>
+            <Text style={styles.cellHeader}>Time</Text> 
         </View>
-
+        {data.length === 0 && showMessage && <Text>No Doctor record Found</Text>} 
         <FlatList
           data={data}
           renderItem={renderItem}
