@@ -8,14 +8,14 @@ import { useNavigation } from '@react-navigation/native';
 export default function Home() {
     const navigation = useNavigation()
     const [activeBox, setActiveBox] = useState(null);
-const userName = "Ahmad";
+
   const handleBoxPress = (boxName) => {
     setActiveBox(boxName);
   };
 
   return (
     <View style={styles.container}>
-    <CustomHeader userName={userName} />
+    <CustomHeader  />
 
 
     <View style={styles.itemContainer}>

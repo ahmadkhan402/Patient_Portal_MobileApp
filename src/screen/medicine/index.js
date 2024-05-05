@@ -7,9 +7,11 @@ import CustomAddModal from '../../../components/customAddModal';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
 export default function Medicine() {
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [data, setData] = useState([]);
-
+  const [showMessage, setShowMessage] = useState(false);
+  
   //   const data = [
   //   { name: 'Medicine A', time: 'Morning', quantity: '1 pill', duration: '7 days' },
   //   { name: 'Medicine B', time: 'Afternoon', quantity: '2 pills', duration: '14 days' },
@@ -72,7 +74,7 @@ export default function Medicine() {
     getDataFromFirestore()
   }, [isModalVisible])
 
-  const [showMessage, setShowMessage] = useState(false);
+
   useEffect(() => {
     if (data.length === 0) {
       const timer = setTimeout(() => {
