@@ -9,12 +9,12 @@ import { getStorage } from "firebase/storage";
 import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAOLmybOzgPAl_dv9Nu6n6gjWYLOr4y74U",
-  authDomain: "patientportal-2c9e0.firebaseapp.com",
-  projectId: "patientportal-2c9e0",
-  storageBucket: "patientportal-2c9e0.appspot.com",
-  messagingSenderId: "153225066358",
-  appId: "1:153225066358:web:5c58c0417d41d7adf76c57"
+  apiKey: "AIzaSyBX1UdMFbfH4r70i-dBqt8bksZKpkaxVbM",
+  authDomain: "patentportal-110bc.firebaseapp.com",
+  projectId: "patentportal-110bc",
+  storageBucket: "patentportal-110bc.appspot.com",
+  messagingSenderId: "1013277587081",
+  appId: "1:1013277587081:web:5bf35a7867cfd4ef10b858"
 };
 
 // Initialize Firebase
@@ -27,7 +27,7 @@ const auth = initializeAuth(app, {
 const storage = getStorage(app)
 const db = getFirestore(app);
 const database = getDatabase(app)
-export {auth}
-export {db}
-export {storage}
-export {database}
+export { auth }
+export { db }
+export { storage }
+export { database }

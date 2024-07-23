@@ -250,7 +250,7 @@ export default function MyApointments() {
                     </View>
                     
                     <View style={styles.divider}>
-                        <Text style={styles.itemtitle}>Recent Appointments</Text>
+                        <Text style={styles.itemtitle}>Previous Appointments</Text>
                         <View style={[styles.listHeader]}>
                             <Text style={styles.cellHeader}>Dr.Name</Text>
                             <Text style={styles.cellHeader}>purpose</Text>
